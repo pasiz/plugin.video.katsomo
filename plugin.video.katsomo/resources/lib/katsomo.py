@@ -52,7 +52,7 @@ class katsomo():
 		ret = common.parseDOM(self.getPage(self.URL['login']), "div", attrs = { "class": "login" })
 		#ret = common.parseDOM(ret, "a", ret = "href")
 		if not "/katsomo/logout" in ret:
-			return doLogin()
+			return self.doLogin()
 		else:
 			return True
 			
@@ -62,7 +62,7 @@ class katsomo():
 			'p' : self.password
 		}
 		header_data = {
-			'User-Agent' : USER_AGENT,
+			'User-Agent' : self.user_agent,
 			'Referer' : 'http://m.katsomo.fi/katsomo/login'
 		}
 		
