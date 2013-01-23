@@ -3,11 +3,11 @@ from xbmcswift2 import xbmc
 from resources.lib.katsomo import katsomo, NetworkError
 
 __STRINGS__ = {
-	'programs' : 30001,
-	'newest' : 30002,
-	'news' : 30003,
-	'sports' : 30004,
-	'kids' : 30005
+	'programs' 	: 30001,
+	'newest' 	: 30002,
+	'news' 		: 30003,
+	'sports' 	: 30004,
+	'kids' 		: 30005
 }
 
 plugin = Plugin()
