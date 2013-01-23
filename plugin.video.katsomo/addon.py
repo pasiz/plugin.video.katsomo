@@ -1,7 +1,6 @@
 from xbmcswift2 import Plugin
 from xbmcswift2 import xbmc
-
-from resources.lib.katsomo import katsomo
+from resources.lib.katsomo import katsomo, NetworkError
 
 __STRINGS__ = {
 	'programs' : 30001,
