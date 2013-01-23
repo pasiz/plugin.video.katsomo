@@ -1,10 +1,14 @@
 import cookielib
+from urllib2 import HTTPError, URLError
 import urllib2,urllib,urlparse,re
 import CommonFunctions
 from datetime import datetime
 import time
 
 common = CommonFunctions
+
+class NetworkError(Exception):
+	pass
 
 class katsomo():
 
@@ -34,6 +38,12 @@ class katsomo():
 		req = urllib2.Request(url, urllib.urlencode(postvars), header_data)			
 		req.add_header('user-agent', self.user_agent)
 		#req.add_header('cookie
+		try:
+			resp = self.opener.open(req).read()
+		except HTTPError, error:
+			raise NetworkError('HTTPError: %s' % error)
+		except URLError, error:
+			raise NetworkError('URLError: %s' % error)
 		return self.opener.open(req).read()
 	
 	def getLoginStatus(self):
