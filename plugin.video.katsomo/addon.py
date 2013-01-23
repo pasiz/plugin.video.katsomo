@@ -39,7 +39,7 @@ def index():
     items = [
     	{'label': _('programs'), 'path': plugin.url_for('show_programs')},
     	{'label': _('news'), 'path' : plugin.url_for('show_program_count', progid='33001')},
-    	{'label': _('sports'), 'path' : plugin.url_for('show_program_count', progid='33001')},
+    	{'label': _('sports'), 'path' : plugin.url_for('show_program_count', progid='33002')},
     	{'label': _('kids'), 'path' : plugin.url_for('show_program_count', progid='33003')}
     ]
     return items
