@@ -13,7 +13,10 @@ __STRINGS__ = {
 plugin = Plugin()
 
 katsomo = katsomo(plugin.addon.getSetting('username'), plugin.addon.getSetting('password'),plugin.addon.getAddonInfo('profile')+'cookies.txt')
-cache_lifetime = int(float(plugin.addon.getSetting('cache_lifetime')))
+if plugin.addon.getSetting('cache_lifetime') != '':
+	cache_lifetime = int(float(plugin.addon.getSetting('cache_lifetime')))
+else:
+	cache_lifetime = 1
 
 
 def _(language):

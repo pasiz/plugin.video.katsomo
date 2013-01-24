@@ -1,11 +1,9 @@
 from cookielib import LWPCookieJar, Cookie
 from urllib2 import HTTPError, URLError
 import urllib2,urllib,urlparse,re
-import CommonFunctions
+import CommonFunctions as common
 from datetime import datetime
 import time
-
-common = CommonFunctions
 
 class NetworkError(Exception):
 	pass
