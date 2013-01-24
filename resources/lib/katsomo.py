@@ -1,9 +1,11 @@
 from cookielib import LWPCookieJar, Cookie
 from urllib2 import HTTPError, URLError
 import urllib2,urllib,urlparse,re
-from CommonFunctions import common
+import CommonFunctions
 from datetime import datetime
 import time
+
+common = CommonFunctions
 
 class NetworkError(Exception):
 	pass
@@ -30,7 +32,6 @@ class katsomo():
 			except IOError:
 				pass
 		self.cj.set_cookie(self.makeCookie('hq','1'))
-		print self.cj
 		self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj))
 		self.user_agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3'
 	

@@ -2,4 +2,6 @@
 <settings>
 	<setting id="username" label="30050" type="text" default="" />
 	<setting id="password" label="30051" type="text" option="hidden" default="" />
+	<setting label="30052" type="sep" />
+	<setting id="cache_lifetime" label="30053" type="number" default="360" />
 </settings>

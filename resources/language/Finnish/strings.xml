@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!-- Plugin name -->
+  <string id="30000">katsomo</string>
+  <string id="30001">Ohjelmat</string>
+  <string id="30002">Uusimmat</string>
+  <string id="30003">Uutiset</string>
+  <string id="30004">Urheilu</string>
+  <string id="30005">Lapset</string>
+  
+  <!-- Settings -->
+  <string id="30050">Käyttäjänimi</string>
+  <string id="30051">Salasana</string>
+  <string id="30052">Caching</string>
+  <string id="30053">Cache lifetime in minutes</string>
+</strings>

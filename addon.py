@@ -13,6 +13,7 @@ __STRINGS__ = {
 plugin = Plugin()
 
 katsomo = katsomo(plugin.addon.getSetting('username'), plugin.addon.getSetting('password'),plugin.addon.getAddonInfo('profile')+'cookies.txt')
+cache_lifetime = int(float(plugin.addon.getSetting('cache_lifetime')))
 
 
 def _(language):
@@ -26,11 +27,11 @@ def _(language):
 		plugin.log.warning('String is missing: %s' % language)
 		return language
 		
-@plugin.cached(60*12)
+@plugin.cached(cache_lifetime)
 def getProgramDirs():
 	return katsomo.getProgramDirs()
 
-@plugin.cached(60*12)
+@plugin.cached(cache_lifetime)
 def getPrograms(progid):
 	return katsomo.getPrograms(progid)
 
