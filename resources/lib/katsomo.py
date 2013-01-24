@@ -92,9 +92,31 @@ class katsomo():
 			self.cj.clear()
 			return False
 	
-	def getProgramDirs(self):	
-		ret = common.parseDOM(self.getPage(self.URL['programdir']), "div", {'id': 'programs-by-name'})
-		ret = common.parseDOM(ret, "ul", {'class': 'all-programs-list'})
+	def getCategories(self):
+		ret = common.parseDOM(self.getPage(self.URL['programdir']), "li", {'class': 'initial'})
+		return ret
+	
+	def getProgramDirs(self, category=''):	
+		if category=='':
+			ret = common.parseDOM(self.getPage(self.URL['programdir']), "div", {'id': 'programs-by-name'})
+			ret = common.parseDOM(ret, "ul", {'class': 'all-programs-list'})
+		else:
+			print 'category given'
+			ret = common.parseDOM(self.getPage(self.URL['programdir']), "div", {'id': 'programs-by-type'})
+			ret = common.parseDOM(ret, "ul", {'class': 'all-programs-list'})
+			out = []
+			found = False
+			ret = ret[0].split('\r')
+			for result in ret:
+				if found:
+					if not '<li class="initial"' in result:
+						out.append(result)
+					else:
+						found = False
+				if '<li class="initial">' + category + '</li>' in result:
+					found = True
+			ret = out
+		
 		retIDs = common.parseDOM(ret, "li", ret="data-id")
 		retNames = common.parseDOM(ret, "li")
 		programdirs=[]

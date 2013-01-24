@@ -3,11 +3,12 @@ from xbmcswift2 import xbmc
 from resources.lib.katsomo import katsomo, NetworkError
 
 __STRINGS__ = {
-	'programs' 	: 30001,
-	'newest' 	: 30002,
-	'news' 		: 30003,
-	'sports' 	: 30004,
-	'kids' 		: 30005
+	'programs' 		: 30001,
+	'newest' 		: 30002,
+	'news' 			: 30003,
+	'sports' 		: 30004,
+	'kids' 			: 30005,
+	'categories'	: 30006
 }
 
 plugin = Plugin()
@@ -31,8 +32,12 @@ def _(language):
 		return language
 		
 @plugin.cached(cache_lifetime)
-def getProgramDirs():
-	return katsomo.getProgramDirs()
+def getProgramDirs(category=''):
+	return katsomo.getProgramDirs(category)
+
+@plugin.cached(cache_lifetime)
+def getCategories():
+	return katsomo.getCategories()
 
 @plugin.cached(cache_lifetime)
 def getPrograms(progid):
@@ -41,7 +46,8 @@ def getPrograms(progid):
 @plugin.route('/')
 def index():
     items = [
-    	{'label': _('programs'), 'path': plugin.url_for('show_programs')},
+    	{'label': _('programs'), 'path' : plugin.url_for('show_programs')},
+    	{'label': _('categories'), 'path' : plugin.url_for('show_categories')},
     	{'label': _('news'), 'path' : plugin.url_for('show_program_count', progid='33001')},
     	{'label': _('sports'), 'path' : plugin.url_for('show_program_count', progid='33002')},
     	{'label': _('kids'), 'path' : plugin.url_for('show_program_count', progid='33003')}
@@ -51,6 +57,24 @@ def index():
 @plugin.route('/ohjelmat/')
 def show_programs():
 	programDirs = getProgramDirs()
+	items = [{
+		'path'  : plugin.url_for('show_program_count',progid=(programDir['id'])),
+		'label' : programDir['label']
+	} for programDir in programDirs]
+	return items
+
+@plugin.route('/categories/')
+def show_categories():
+	categories = getCategories()
+	items = [{
+		'path' : plugin.url_for('show_programs_content', content=(category)),
+		'label' : category
+	} for category in categories]
+	return items
+
+@plugin.route('/<content>/')
+def show_programs_content(content):
+	programDirs = getProgramDirs(content)
 	items = [{
 		'path'  : plugin.url_for('show_program_count',progid=(programDir['id'])),
 		'label' : programDir['label']
