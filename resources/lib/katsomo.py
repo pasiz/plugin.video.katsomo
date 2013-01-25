@@ -101,7 +101,6 @@ class katsomo():
 			ret = common.parseDOM(self.getPage(self.URL['programdir']), "div", {'id': 'programs-by-name'})
 			ret = common.parseDOM(ret, "ul", {'class': 'all-programs-list'})
 		else:
-			print 'category given'
 			ret = common.parseDOM(self.getPage(self.URL['programdir']), "div", {'id': 'programs-by-type'})
 			ret = common.parseDOM(ret, "ul", {'class': 'all-programs-list'})
 			out = []
@@ -144,11 +143,11 @@ class katsomo():
 			ts = None
 			if 'TULOSSA' in timestamp:
 				continue
-			try:
-				ts = datetime.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')
-			except TypeError:
-				ts = datetime(*(time.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')[0:6]))	
-			timestamp = '{:%d.%m.%Y}'.format(ts)
+			#try:
+			#	ts = datetime.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')
+			#except TypeError:
+			#	ts = datetime(*(time.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')[0:6]))	
+			#timestamp = '{:%d.%m.%Y}'.format(ts)
 			playid = urlparse.urlparse(link)[4].split('=')[1]
 			programs.append( {'playid' : playid, 'title':title, 'img' : img } )
 		return programs

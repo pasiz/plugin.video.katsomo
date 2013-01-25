@@ -45,14 +45,13 @@ def getPrograms(progid):
 
 @plugin.route('/')
 def index():
-    items = [
-    	{'label': _('programs'), 'path' : plugin.url_for('show_programs')},
-    	{'label': _('categories'), 'path' : plugin.url_for('show_categories')},
-    	{'label': _('news'), 'path' : plugin.url_for('show_program_count', progid='33001')},
-    	{'label': _('sports'), 'path' : plugin.url_for('show_program_count', progid='33002')},
-    	{'label': _('kids'), 'path' : plugin.url_for('show_program_count', progid='33003')}
-    ]
-    return items
+	categories = getCategories()
+	items = [{'label': _('programs'), 'path' : plugin.url_for('show_programs')}]
+	items += [{
+		'path' : plugin.url_for('show_programs_content', content=(category)),
+		'label' : category
+	} for category in categories]
+	return items
 
 @plugin.route('/ohjelmat/')
 def show_programs():
@@ -61,15 +60,6 @@ def show_programs():
 		'path'  : plugin.url_for('show_program_count',progid=(programDir['id'])),
 		'label' : programDir['label']
 	} for programDir in programDirs]
-	return items
-
-@plugin.route('/categories/')
-def show_categories():
-	categories = getCategories()
-	items = [{
-		'path' : plugin.url_for('show_programs_content', content=(category)),
-		'label' : category
-	} for category in categories]
 	return items
 
 @plugin.route('/<content>/')
