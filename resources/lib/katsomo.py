@@ -130,11 +130,15 @@ class katsomo():
 		return programdirs
 		
 	def getPrograms(self, prog_id): 
-		ret = common.parseDOM(self.getPage(self.URL['programs'] + prog_id), "div", {'class': 'program'})
+		page = self.getPage(self.URL['programs'] + prog_id)
+		serieplot = common.parseDOM(page, "div", {'class' : 'program-details' })
+		serieplot = common.parseDOM(serieplot, "p")[0]
+		ret = common.parseDOM(page, "div", {'class': 'program'})
 		programs = []
 		for r in ret:
 			link = common.parseDOM(r, "a", ret = "href")[0]
 			title = common.parseDOM(r, "p", {'class': 'program-name'})[0]
+			plot = common.parseDOM(r, "p", {'class': 'program-abstract'})[0]
 			if 'class="star"' in title and not self.getLoginStatus(): continue
 			elif 'class="star"' in title and self.getLoginStatus() and self.scrapVideoLink(link) == None: continue	
 			title += ' ' + common.parseDOM(r, "p", {'class': 'program-abstract'})[0]
@@ -143,13 +147,13 @@ class katsomo():
 			ts = None
 			if 'TULOSSA' in timestamp:
 				continue
-			#try:
-			#	ts = datetime.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')
-			#except TypeError:
-			#	ts = datetime(*(time.strptime(timestamp.replace('- ', ''), '%d.%m.%Y %H.%M')[0:6]))	
-			#timestamp = '{:%d.%m.%Y}'.format(ts)
+			try:
+				ts = datetime.strptime(timestamp.replace('- ',''), '%d.%m.%Y %H.%M')
+			except TypeError:
+				ts = datetime(*(time.strptime(timestamp.replace('- ',''), '%d.%m.%Y %H.%M')[0:6]))	
+			timestamp = str('{:%d.%m.%Y}'.format(ts))
 			playid = urlparse.urlparse(link)[4].split('=')[1]
-			programs.append( {'playid' : playid, 'title':title, 'img' : img } )
+			programs.append( {'playid' : playid, 'title':title, 'img' : img, 'timestamp' : timestamp, 'plot' : serieplot + plot, 'plotoutline' : plot } )
 		return programs
 		
 	def getVideoLink(self, link_id):

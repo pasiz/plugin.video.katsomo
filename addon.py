@@ -75,10 +75,15 @@ def show_programs_content(content):
 def show_program_count(progid):
 	programs = getPrograms(progid)
 	items = [{
-		'label' : program['title'],
-		'path' : plugin.url_for('play_program', playid=(program['playid'])),
+		'label' : program.get('title'),
+		'path' : plugin.url_for('play_program', playid=(program.get('playid'))),
 		'is_playable' : True,
-		'thumbnail' : program['img']
+		'thumbnail' : program.get('img'),
+		'info': {
+			'plot' : program.get('plot'),
+			'plotoutline' : program.get('plotoutline'),
+			'aired' : program.get('timestamp'),
+		}
 	} for program in programs]
 	return items
 
