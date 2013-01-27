@@ -151,7 +151,8 @@ class katsomo():
 				ts = datetime.strptime(timestamp.replace('- ',''), '%d.%m.%Y %H.%M')
 			except TypeError:
 				ts = datetime(*(time.strptime(timestamp.replace('- ',''), '%d.%m.%Y %H.%M')[0:6]))	
-			timestamp = str('{:%d.%m.%Y}'.format(ts))
+			timestamp = ts.strftime('%d.%m.%Y')
+			#timestamp = str('{:%d.%m.%Y}'.format(ts))
 			playid = urlparse.urlparse(link)[4].split('=')[1]
 			programs.append( {'playid' : playid, 'title':title, 'img' : img, 'timestamp' : timestamp, 'plot' : serieplot + plot, 'plotoutline' : plot } )
 		return programs
