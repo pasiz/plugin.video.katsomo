@@ -53,6 +53,15 @@ def index():
 	} for category in categories]
 	return items
 
+@plugin.route('/<content>/')
+def show_programs_content(content):
+	programDirs = getProgramDirs(content)
+	items = [{
+		'path'  : plugin.url_for('show_program_count',progid=(programDir['id'])),
+		'label' : programDir['label']
+	} for programDir in programDirs]
+	return items
+
 @plugin.route('/ohjelmat/')
 def show_programs():
 	programDirs = getProgramDirs()
