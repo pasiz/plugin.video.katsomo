@@ -14,7 +14,6 @@ __STRINGS__ = {
 plugin = Plugin()
 
 katsomo = katsomo(plugin.addon.getSetting('username'), plugin.addon.getSetting('password'),plugin.addon.getAddonInfo('profile')+'cookies.txt')
-plugin.log.info(plugin.addon.getAddonInfo('profile')+'cookies.txt')
 if plugin.addon.getSetting('cache_lifetime') != '':
 	cache_lifetime = int(float(plugin.addon.getSetting('cache_lifetime')))
 else:
@@ -52,8 +51,6 @@ def index():
 		'path' : plugin.url_for('show_programs_content', content=(category)),
 		'label' : category
 	} for category in categories]
-	for i in items:
-		plugin.log.info(i)
 	return items
 
 @plugin.route('/ohjelmat/')
