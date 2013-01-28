@@ -52,6 +52,8 @@ def index():
 		'path' : plugin.url_for('show_programs_content', content=(category)),
 		'label' : category
 	} for category in categories]
+	for i in items:
+		plugin.log.info(i)
 	return items
 
 @plugin.route('/ohjelmat/')
