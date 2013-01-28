@@ -18,7 +18,8 @@ class katsomo():
 	}
 
 	def __init__(self, username="", password="", cookie_file=""):
-		self.cj = LWPCookieJar(cookie_file)
+		if not cookie_file == "":
+			self.cj = LWPCookieJar(cookie_file)
 		if username == "":
 			self.noLogin = True
 		else:
