@@ -63,7 +63,7 @@ def show_programs():
 	} for programDir in programDirs]
 	return items
 
-@plugin.route('/<content>/')
+@plugin.route('/content/<content>/')
 def show_programs_content(content):
 	programDirs = getProgramDirs(content)
 	items = [{
