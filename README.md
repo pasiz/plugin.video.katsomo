@@ -1,7 +1,7 @@
 #plugin.video.katsomo
 
 
-##Srewrite of plugin.video.katsomo
+##rewrite of plugin.video.katsomo
 
 featuring **xbmcswift** (can be debugged commandline in virtual environment), caching and more structured
 
