@@ -9,14 +9,13 @@ class NetworkError(Exception):
 	pass
 
 class katsomo():
-
 	URL = { 
 		'login' : 'http://m.katsomo.fi/katsomo/login',
 		'programdir' : 'http://m.katsomo.fi/katsomo/programs',
 		'programs' : 'http://m.katsomo.fi/katsomo/?treeId=',
 		'videolink' : 'http://m.katsomo.fi/?progId='
 	}
-
+	clearCache=False
 	def __init__(self, username="", password="", cookie_file=""):
 		self.cj = LWPCookieJar(cookie_file)
 		if username == "":
@@ -87,6 +86,7 @@ class katsomo():
 				self.cj.save( ignore_discard=True )
 			except IOError:
 				pass
+			self.clearCache=True
 			return True
 		else:
 			self.cj.clear()

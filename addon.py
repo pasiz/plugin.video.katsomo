@@ -19,6 +19,13 @@ if plugin.addon.getSetting('cache_lifetime') != '':
 else:
 	cache_lifetime = 1
 
+def clearCaches():
+	if katsomo.clearCache:
+		cache_data = plugin.get_storage('.functions')
+		cache_data.clear()
+		cache_data.sync()
+		katsomo.clearCache = False
+		plugin.log.info('cache cleared')
 
 def _(language):
 	if language in __STRINGS__:
@@ -31,20 +38,21 @@ def _(language):
 		plugin.log.warning('String is missing: %s' % language)
 		return language
 		
-@plugin.cached(cache_lifetime)
+@plugin.cached(TTL=cache_lifetime)
 def getProgramDirs(category=''):
 	return katsomo.getProgramDirs(category)
 
-@plugin.cached(cache_lifetime)
+@plugin.cached(TTL=cache_lifetime)
 def getCategories():
 	return katsomo.getCategories()
 
-@plugin.cached(cache_lifetime)
+@plugin.cached(TTL=cache_lifetime)
 def getPrograms(progid):
 	return katsomo.getPrograms(progid)
 
 @plugin.route('/')
 def index():
+	clearCaches()
 	categories = getCategories()
 	items = [{'label': _('programs'), 'path' : plugin.url_for('show_programs')}]
 	items += [{
@@ -56,6 +64,7 @@ def index():
 @plugin.route('/ohjelmat/', name='show_programs')
 @plugin.route('/ohjelmat/<content>/', name='show_programs_content')
 def show_programs(content=''):
+	clearCaches()
 	programDirs = getProgramDirs(content)
 	items = [{
 		'path'  : plugin.url_for('show_program_count',progid=(programDir['id'])),
@@ -65,6 +74,7 @@ def show_programs(content=''):
 
 @plugin.route('/ohjelmat/<progid>/')
 def show_program_count(progid):
+	clearCaches()
 	programs = getPrograms(progid)
 	items = [{
 		'label' : program.get('title'),
