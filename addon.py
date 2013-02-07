@@ -1,6 +1,10 @@
 from xbmcswift2 import Plugin
 from xbmcswift2 import xbmc
 from resources.lib.katsomo import katsomo, NetworkError
+import SimpleDownloader as downloader
+
+downloader = downloader.SimpleDownloader()
+plugin = Plugin()
 
 __STRINGS__ = {
 	'programs' 		: 30001,
@@ -8,10 +12,9 @@ __STRINGS__ = {
 	'news' 			: 30003,
 	'sports' 		: 30004,
 	'kids' 			: 30005,
-	'categories'	: 30006
+	'categories'	: 30006,
+	'download'		: 30007
 }
-
-plugin = Plugin()
 
 katsomo = katsomo(plugin.addon.getSetting('username'), plugin.addon.getSetting('password'),plugin.addon.getAddonInfo('profile')+'cookies.txt')
 if plugin.addon.getSetting('cache_lifetime') != '':
@@ -78,16 +81,28 @@ def show_program_count(progid):
 	programs = getPrograms(progid)
 	items = [{
 		'label' : program.get('title'),
-		'path' : plugin.url_for('play_program', playid=(program.get('playid'))),
+		'path' : plugin.url_for('play_program', playid=program.get('playid')),
 		'is_playable' : True,
 		'thumbnail' : program.get('img'),
 		'info': {
 			'plot' : program.get('plot'),
 			'plotoutline' : program.get('plotoutline'),
 			'aired' : program.get('timestamp'),
-		}
+		},
+		'context_menu' : [
+			(_('download'),'XBMC.RunPlugin(%s)' % plugin.url_for('download_program', playid=program.get('playid'), title=program.get('title'))),
+		],
 	} for program in programs]
 	return items
+
+@plugin.route('/download/<playid>/<title>')
+def download_program(playid, title):
+	params = {
+		'url' : katsomo.getVideoLink(playid),
+		'download_path' : plugin.addon.getSetting('download_folder'),
+		'Title' : title,
+	}
+	downloader.download(title+'.mp4', params)
 
 @plugin.route('/play/<playid>')
 def play_program(playid):

@@ -8,10 +8,12 @@
   <string id="30004">Urheilu</string>
   <string id="30005">Lapset</string>
   <string id="30006">Aiheittain</string>
+  <string id="30007">Lataa koneelle</string>
   
   <!-- Settings -->
   <string id="30050">Käyttäjänimi</string>
   <string id="30051">Salasana</string>
   <string id="30052">Caching</string>
-  <string id="30053">Cache lifetime in minutes</string>
+  <string id="30053">Välimuistin virkistys minuutteina</string>
+  <string id="30054">Latauskansio</string>
 </strings>

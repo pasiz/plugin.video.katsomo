@@ -4,4 +4,5 @@
 	<setting id="password" label="30051" type="text" option="hidden" default="" />
 	<setting label="30052" type="sep" />
 	<setting id="cache_lifetime" label="30053" type="number" default="360" />
+	<setting id="download_dir" label="30054" type="folder" source="auto" option="writeable" />
 </settings>
