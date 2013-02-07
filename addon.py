@@ -72,7 +72,7 @@ def show_programs(content=''):
 	} for programDir in programDirs]
 	return items
 
-@plugin.route('/ohjelmat/<progid>/')
+@plugin.route('/ohjelma/<progid>/')
 def show_program_count(progid):
 	clearCaches()
 	programs = getPrograms(progid)
