@@ -99,7 +99,7 @@ def show_program_count(progid):
 def download_program(playid, title):
 	params = {
 		'url' : katsomo.getVideoLink(playid),
-		'download_path' : plugin.addon.getSetting('download_folder'),
+		'download_path' : plugin.addon.getSetting('download_dir'),
 		'Title' : title,
 	}
 	downloader.download(title+'.mp4', params)
